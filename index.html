@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Microduck Field Guide — what it is, how to learn it, what it costs to build one in India</title>
+<meta name="description" content="A source-checked guide to Microduck, the $399 open-source-software biped from Pollen Robotics and Hugging Face: the news, the specs, every learning resource worth your time, and an honest India parts list and budget for building a replica or an Open Duck Mini v2.">
+<meta property="og:title" content="Microduck Field Guide">
+<meta property="og:description" content="News, specs, learning path, build routes and India budgets for the Hugging Face / Pollen Robotics Microduck.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Apply the saved theme before first paint. Light is the default for everyone.
+  (function () {
+    try {
+      var t = localStorage.getItem('mdg-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="wordmark" href="#top" aria-label="Microduck Field Guide, back to top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="2" fill="currentColor"/><rect x="8" y="8" width="13" height="10" rx="1.5" fill="var(--bg)"/><polygon points="21,11 29,13 21,15" fill="#e8611a"/><circle cx="17.5" cy="12" r="1.4" fill="currentColor"/><rect x="10" y="20" width="3" height="6" fill="var(--bg)"/><rect x="16" y="20" width="3" height="6" fill="var(--bg)"/></svg>
+      <span>Microduck Field Guide<small>Evidence cutoff 24 Oct 2026</small></span>
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      <a href="#news"><span class="n">01</span>News</a>
+      <a href="#robot"><span class="n">02</span>Robot</a>
+      <a href="#open"><span class="n">03</span>Open?</a>
+      <a href="#learn"><span class="n">04</span>Learn</a>
+      <a href="#build"><span class="n">05</span>Build</a>
+      <a href="#budget"><span class="n">06</span>Budget</a>
+      <a href="#resources"><span class="n">07</span>Resources</a>
+    </nav>
+    <button class="theme-toggle" type="button" id="themeToggle" aria-pressed="false">Dark</button>
+  </div>
+</header>
+
+<nav class="rail" aria-label="Progress">
+  <ol>
+    <li><a href="#news">News</a></li>
+    <li><a href="#robot">Robot</a></li>
+    <li><a href="#open">Open?</a></li>
+    <li><a href="#learn">Learn</a></li>
+    <li><a href="#build">Build</a></li>
+    <li><a href="#budget">Budget</a></li>
+    <li><a href="#resources">Resources</a></li>
+  </ol>
+</nav>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" aria-labelledby="hero-title">
+  <div>
+    <p class="kicker">Field guide · October 2026</p>
+    <h1 id="hero-title">The <em>$399 duck</em> that walked onto NVIDIA's stage.</h1>
+    <div class="lede">
+      <p>Microduck is a 25 cm, 800 g biped from Pollen Robotics, the Bordeaux team that is Hugging Face's robotics group. Every move it makes is a neural network trained in simulation. This guide covers why it is in the news this week, what it actually is, how to learn the whole stack for free, and what it honestly costs to build one from India.</p>
+    </div>
+    <div class="hero-meta">
+      <span><b>Pre-orders</b> open 27 Aug 2026</span>
+      <span><b>Ships</b> before Christmas 2026 (target)</span>
+      <span><b>Launch markets</b> North America, Europe, UK</span>
+      <span><b>Licence</b> Apache-2.0 software</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn primary" href="#learn">Start learning (₹0)</a>
+      <a class="btn" href="#budget">See the India budget</a>
+    </div>
+  </div>
+
+  <figure class="duck-figure" aria-describedby="duck-cap">
+    <svg viewBox="0 0 620 600" role="img" aria-label="Side-view schematic of the Microduck with its fifteen joints and main components labelled">
+      <!-- leaders -->
+      <g class="lead" fill="none">
+        <path d="M352 118 L466 60"/>
+        <path d="M277 104 L150 64"/>
+        <path d="M344 158 L466 190"/>
+        <path d="M312 165 L170 150"/>
+        <path d="M258 285 L192 300"/>
+        <path d="M232 340 L200 380"/>
+        <path d="M322 425 L466 440"/>
+        <path d="M236 492 L172 520"/>
+        <path d="M396 134 L466 110"/>
+      </g>
+      <!-- head -->
+      <rect class="shell" x="248" y="86" width="136" height="86" rx="24"/>
+      <polygon class="beak" points="382,118 476,138 382,156"/>
+      <circle class="eye" cx="352" cy="118" r="6"/>
+      <circle class="rec" cx="277" cy="104" r="4"/>
+      <rect x="334" y="152" width="22" height="9" fill="var(--ink)"/>
+      <!-- neck -->
+      <rect x="296" y="170" width="18" height="36" fill="var(--ink)"/>
+      <!-- body -->
+      <rect class="shell" x="150" y="204" width="226" height="150" rx="44"/>
+      <!-- legs -->
+      <polyline class="leg" points="232,340 214,424 238,492"/>
+      <polyline class="leg" points="302,344 322,424 304,492"/>
+      <rect class="foot" x="190" y="490" width="86" height="14"/>
+      <rect class="foot" x="266" y="490" width="86" height="14" opacity="0.85"/>
+      <!-- joints -->
+      <g class="joint">
+        <circle cx="312" cy="165" r="7"/>
+        <circle cx="305" cy="200" r="7"/>
+        <circle cx="330" cy="128" r="5"/>
+        <circle cx="396" cy="134" r="5"/>
+        <circle cx="232" cy="340" r="9"/>
+        <circle cx="302" cy="344" r="9"/>
+        <circle cx="214" cy="424" r="7"/>
+        <circle cx="322" cy="424" r="7"/>
+        <circle cx="238" cy="492" r="7"/>
+        <circle cx="304" cy="492" r="7"/>
+      </g>
+      <!-- labels -->
+      <g class="lbl">
+        <text x="474" y="56">camera (REC light)</text>
+        <text x="474" y="106">beak servo · grasp</text>
+        <text x="474" y="194">8×8 ToF “LiDAR”</text>
+        <text x="474" y="444">knee · ankle × 2</text>
+        <text x="16" y="60">head IMU · mics</text>
+        <text x="16" y="146">neck pitch + head</text>
+        <text x="16" y="296">RK3566 · 1 GB · NPU</text>
+        <text x="16" y="376">hip yaw/roll/pitch × 2</text>
+        <text x="16" y="516">NP-F550 2S battery</text>
+        <text x="16" y="586">15 servos · 14 under policy control · 50 Hz</text>
+      </g>
+    </svg>
+    <figcaption id="duck-cap">Schematic, not to scale. Joint layout from the public MJCF model; servo family is inferred by the community (see §02).</figcaption>
+  </figure>
+</section>
+
+<div class="facts" role="list" aria-label="Fast facts">
+  <div role="listitem"><div class="num">15</div><div class="lab">motors</div></div>
+  <div role="listitem"><div class="num">25<small>cm</small></div><div class="lab">tall</div></div>
+  <div role="listitem"><div class="num">&lt;800<small>g</small></div><div class="lab">weight</div></div>
+  <div role="listitem"><div class="num">50<small>Hz</small></div><div class="lab">policy loop</div></div>
+  <div role="listitem"><div class="num">7</div><div class="lab">moves in the box</div></div>
+  <div role="listitem"><div class="num">$399</div><div class="lab">intro price, pre-tax</div></div>
+  <div role="listitem"><div class="num">10k+</div><div class="lab">units in 5 days</div></div>
+</div>
+
+<!-- ===================== 01 NEWS ===================== -->
+<section class="section" id="news" aria-labelledby="news-title">
+  <div class="section-head">
+    <div>
+      <p class="kicker">01 · Why it is trending</p>
+      <h2 id="news-title">Two months from launch to Jensen Huang's keynote.</h2>
+    </div>
+    <div class="lede">
+      <p>The duck launched in late August and sold faster than Pollen expected. Then on 21 October four of them walked on stage at NVIDIA GTC Berlin, their skills trained by AI agents on NVIDIA's RTX Spark, and the robotics press picked it up again.</p>
+    </div>
+  </div>
+
+  <ol class="timeline">
+    <li>
+      <div class="date">27 Aug 2026</div>
+      <div>
+        <h3>Pre-orders open at $399</h3>
+        <p>Pollen Robotics and Hugging Face unveil Microduck: 25 cm, 15 motors, seven trained moves, first deliveries targeted before Christmas 2026. Launch markets are North America, Europe and the UK.</p>
+        <div class="src"><a href="https://techcrunch.com/2026/08/27/hugging-face-is-selling-a-cute-399-open-source-duck-robot-microduck/">TechCrunch</a><a href="https://pollen-robotics.com/microduck/press-kit/">Press kit</a><a href="https://news.ycombinator.com/item?id=49462763">Hacker News thread</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="date">31 Aug 2026</div>
+      <div>
+        <h3>Official policies published to the Hub</h3>
+        <p>The shipped behaviours go up as a standalone Apache-2.0 repository, <code>microduck-policies</code>, one ONNX file per move with a manifest. <code>velstand</code> (walk + fall recovery in one network) became the default walk on 14 September.</p>
+        <div class="src"><a href="https://huggingface.co/pollen-robotics/microduck-policies">microduck-policies</a><a href="https://github.com/joeynyc/awesome-microduck">awesome-microduck</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="date">1 Sep 2026</div>
+      <div>
+        <h3>10,000+ units, $5M+ in five days</h3>
+        <p>CNBC reports more than 10,000 units sold since the Thursday launch, with sales past $5 million, and notes the robot runs on a Chinese Rockchip SoC.</p>
+        <div class="src"><a href="https://www.cnbc.com/2026/09/01/hugging-faces-new-duck-robot-is-selling-fast-a-chinese-chip-powers-it.html">CNBC</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="date">21 Oct 2026</div>
+      <div>
+        <h3>Four Microducks close the GTC Berlin keynote</h3>
+        <p>Jensen Huang's keynote ends with four ducks walking on stage, sitting, standing and napping on command. NVIDIA says the skills were trained with AI agents running on RTX Spark, using Isaac Lab to simulate thousands of ducks in parallel before transfer to the real robots.</p>
+        <div class="src"><a href="https://www.ndtv.com/world-news/nvidia-ceo-jensen-huang-showcases-ai-powered-microducks-that-sit-stand-and-nap-on-command-12223416">NDTV</a><a href="https://gadgetsnow.indiatimes.com/tech-news/jensen-huang-wanted-a-robot-duck-to-do-a-somersault-all-about-nvidia-rtx-spark-training-hugging-faces-microduck-robot/amp_articleshow/135117547.cms">Gadgets Now</a><a href="https://www.ainvest.com/news/nvidia-somersaulting-duck-option-business-decomposing-gtc-berlin-robot-demo-89-billion-quarter-2610/">AInvest analysis</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="date">21 Oct 2026</div>
+      <div>
+        <h3>NVIDIA + Hugging Face publish the Isaac Lab sim-to-real walkthrough</h3>
+        <p>A step-by-step blog: train Microduck to walk in Isaac Lab with the Newton physics engine, test the policy, export ONNX, deploy on the real robot. This is the tutorial most of this week's coverage is summarising.</p>
+        <div class="src"><a href="https://huggingface.co/blog/nvidia/microduck-isaac-lab-sim-to-real">HF blog</a><a href="https://www.techrepublic.com/article/news-nvidia-microduck-robot-ai-walking/">TechRepublic</a><a href="https://www.hackster.io/news/microduck-wants-to-make-physical-ai-easy-a10f0a915af1">Hackster</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="date">Dec 2026</div>
+      <div>
+        <h3>First deliveries (target)</h3>
+        <p>Almost nobody outside Pollen has a physical unit yet. Every community project you will find below is simulation-validated unless it says otherwise. Treat hardware claims accordingly.</p>
+        <div class="src"><span class="chip fact">fact</span> <span class="small">per the press kit; dates are targets, not promises</span></div>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- ===================== 02 ROBOT ===================== -->
+<section class="section" id="robot" aria-labelledby="robot-title">
+  <div class="section-head">
+    <div>
+      <p class="kicker">02 · What it actually is</p>
+      <h2 id="robot-title">A Rust control loop, fifteen tiny servos and ten neural networks.</h2>
+    </div>
+    <div class="lede">
+      <p>Specifications below come from Pollen's press kit unless labelled otherwise. Camera resolution, LiDAR range and radio versions were still marked provisional at launch.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-2" style="gap:3rem">
+    <div>
+      <h3 style="margin-bottom:1rem">Spec sheet <span class="chip fact">fact</span></h3>
+      <dl class="spec">
+        <div><dt>Motors</dt><dd>15 degrees of freedom across legs, neck and head; 14 under policy control, the 15th opens the beak</dd></div>
+        <div><dt>Size</dt><dd>25 cm tall, 14 cm wide, under 800 g</dd></div>
+        <div><dt>Compute</dt><dd>Rockchip RK3566 with NPU, 1 GB RAM, 32 GB storage</dd></div>
+        <div><dt>Vision</dt><dd>Front camera with a REC-style indicator light</dd></div>
+        <div><dt>Motion sensing</dt><dd>Two IMUs: one in the body, one in the head</dd></div>
+        <div><dt>Range</dt><dd>Compact “LiDAR”: an 8×8 time-of-flight matrix</dd></div>
+        <div><dt>Interaction</dt><dd>Articulated grasping beak, two NFC antennas (head and beak)</dd></div>
+        <div><dt>Audio</dt><dd>Microphones and speaker, per-robot generated voice</dd></div>
+        <div><dt>Radio</dt><dd>Wi-Fi and Bluetooth</dd></div>
+        <div><dt>Battery</dt><dd>Removable NP-F550 camera battery, 2600 mAh, about one hour</dd></div>
+        <div><dt>In the box</dt><dd>Robot, battery, USB-C cable, game controller</dd></div>
+        <div><dt>Packs</dt><dd>Charger pack $39 (dual charger, 2 batteries) · Accessory pack $39 (laser pointer, rollers, ball, NFC tags) · Dev pack $119 (3 spare motors, 5 cables, 2 batteries, charger, tags, tools)</dd></div>
+        <div><dt>Colourways</dt><dd>Cream, Graphite, Lavender, Sky. Same robot underneath.</dd></div>
+      </dl>
+      <div class="swatches" style="margin-top:1.2rem" aria-label="Colourways">
+        <div><div class="sw" style="background:#f7e6cb"></div><div class="sw-l">Cream<span>#f7e6cb</span></div></div>
+        <div><div class="sw" style="background:#6c6a68"></div><div class="sw-l">Graphite<span>#6c6a68</span></div></div>
+        <div><div class="sw" style="background:#bfa9cf"></div><div class="sw-l">Lavender<span>#bfa9cf</span></div></div>
+        <div><div class="sw" style="background:#a9dbe8"></div><div class="sw-l">Sky<span>#a9dbe8</span></div></div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="margin-bottom:1rem">How the software works</h3>
+      <p>The robot's brain is <a href="https://github.com/pollen-robotics/microduck">pollen-robotics/microduck</a>: a Rust workspace of small daemons talking JSON-RPC over Unix sockets. <code>robotd</code> owns the 50 Hz control loop and the servo bus. <code>updaterd</code> installs signed releases and rolls back if the robot boots unhealthy. <code>mediad</code> streams the camera over WebRTC, <code>tofd</code> serves the depth sensor, <code>padd</code> reads the gamepad, <code>btd</code> is the Bluetooth path for the phone app.</p>
+      <p>Behaviours come from <a href="https://github.com/pollen-robotics/microduck_rl">microduck_rl</a>: PPO on <a href="https://github.com/mujocolab/mjlab">mjlab</a> (MuJoCo Warp), trained at 50 Hz with a 61-number observation and a 14-number action. The sim-to-real recipe is the interesting part: a voltage-level actuator model (BAM) identified on a real servo bench, randomised battery voltage (6.5 to 8.2 V), randomised command delay (3 to 6 control steps) and an explicit backlash hinge in series with every joint. Policies export to ONNX and the runtime hot-swaps them (walk, recover, trick) behind the shared observation contract.</p>
+      <pre aria-label="Train, export and deploy commands"><code># train the walking policy (CUDA GPU, ~1-2 h for a usable gait at 4096 envs)
+uv run train Mjlab-Velocity-Flat-MicroDuck --env.scene.num-envs 4096
+
+# no GPU? run the same job on Hugging Face Jobs
+uv run train Mjlab-Velocity-Flat-MicroDuck --hf-jobs
+
+# export to ONNX, then drive it in CPU MuJoCo with the keyboard
+uv run scripts/export.py Mjlab-Velocity-Flat-MicroDuck --wandb-run-path &lt;...&gt;
+uv run scripts/infer_policy.py --walking output.onnx</code></pre>
+      <h4 style="margin-bottom:0.5rem">The seven shipped moves</h4>
+      <p class="small" style="color:var(--ink-2)">Walk (velocity tracking) · Sit &amp; stand · Kick · Grab (beak to floor) · Roller skating (with skates) · Get back up, plus crouching and a forward roll (“roulade”) depending on how Pollen counts. Ten policy files on the Hub cover these and the roller variants.</p>
+
+      <h4 style="margin: 1.2rem 0 0.5rem">What the community has inferred <span class="chip infer">inferred</span></h4>
+      <ul class="small" style="color:var(--ink-2)">
+        <li>Servos are almost certainly <b>Dynamixel XL330-M288-T</b>: the training code loads the BAM “m6” model that Rhoban identified on that exact part, and the public mesh is referenced 15 times. Pollen has never named the sub-model. <a href="https://github.com/fanhao375/microduck-replica/blob/master/docs/actuator-selection.en.md">Evidence chain</a>.</li>
+        <li>The servos run at 6.6 to 8.2 V from the 2S battery, above the XL330's 6.0 V rating. The open HAT schematic shows no regulator between battery and servo connectors. More torque, more heat. Copy it and you take on the same trade-off.</li>
+        <li>The compute board is RK3566-class (Radxa Zero 3W is the usual guess from the teardowns); Pollen states only the SoC.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 OPEN ===================== -->
+<section class="section" id="open" aria-labelledby="open-title">
+  <div class="section-head">
+    <div>
+      <p class="kicker">03 · Exactly how open</p>
+      <h2 id="open-title">Open-source software. Not open-source hardware.</h2>
+    </div>
+    <div class="lede">
+      <p>This distinction decides whether you can “build the exact same thing”. Pollen's own press kit asks journalists not to call it open-source hardware. Here is the line.</p>
+    </div>
+  </div>
+
+  <div class="openness">
+    <div>
+      <h3><span class="chip fact">open · Apache-2.0</span></h3>
+      <ul>
+        <li>Robot runtime and all daemons: <a href="https://github.com/pollen-robotics/microduck">pollen-robotics/microduck</a>, with design docs and an open roadmap.</li>
+        <li>Training stack: <a href="https://github.com/pollen-robotics/microduck_rl">microduck_rl</a>, including the BAM actuator model, domain randomisation and the reward-design playbook (<code>AGENTS.md</code>).</li>
+        <li>Every shipped policy: <a href="https://huggingface.co/pollen-robotics/microduck-policies">microduck-policies</a> on the Hub, retrainable and replaceable with <code>robotctl policy add</code>.</li>
+        <li>The in-browser simulator (<a href="https://huggingface.co/spaces/pollen-robotics/microduck-simulator">Sandbox</a>), the Arena leaderboard, the duck detector and its training pipeline.</li>
+        <li>The MuJoCo model (MJCF) and the STL meshes of every part are public, so the simulation twin is complete.</li>
+        <li>The Raspberry Pi robot HAT from the prototype era (<code>elec_RPI_Robot_HAT</code>) is published with a KiCad schematic, per the community teardowns; it is how the servo over-voltage was confirmed.</li>
+      </ul>
+    </div>
+    <div>
+      <h3><span class="chip" style="border-color:var(--line-strong);color:var(--ink)">not released</span></h3>
+      <ul>
+        <li>No official bill of materials, no editable CAD, no production PCB files.</li>
+        <li>The 3D model is public for simulation, but community projects report it carries a <b>non-commercial</b> licence. Printing a copy for yourself is the use case; selling kits is not.</li>
+        <li>No official statement of the servo part number, the compute board or the battery electronics beyond the SoC and NP-F550.</li>
+        <li>Spare parts come through the $119 Dev pack rather than an open supply chain.</li>
+      </ul>
+      <p class="small" style="margin-top:1rem;color:var(--muted)">Consequence: an exact Microduck can only be approximated by a replica built from the public meshes plus community reverse-engineering. The fully open-hardware duck is its predecessor, <a href="https://github.com/apirrone/Open_Duck_Mini">Open Duck Mini v2</a>, by the same engineer, with a published BOM, Onshape CAD, print guide and runtime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 LEARN ===================== -->
+<section class="section" id="learn" aria-labelledby="learn-title">
+  <div class="section-head">
+    <div>
+      <p class="kicker">04 · Learning path</p>
+      <h2 id="learn-title">Five levels, almost all of it free.</h2>
+    </div>
+    <div class="lede">
+      <p>Ordered so each level pays for the next. Level 0 takes an evening. Levels 1 to 3 are the real course: reinforcement learning, legged locomotion and the Microduck stack itself. Level 4 is for when you decide to touch hardware.</p>
+      <div class="legend" style="margin-top:0.8rem"><span class="chip free">free</span> no cost <span class="chip paid">paid</span> costs money <span class="chip tag">sim</span> simulation only, no robot needed</div>
+    </div>
+  </div>
+
+  <div class="path">
+
+    <article class="level">
+      <div class="lvl-head">
+        <div class="n">0</div>
+        <h3>Touch it tonight</h3>
+        <p>Drive the real policies in your browser, read how the robot is built, watch the launch film. No install.</p>
+        <div class="hours">2 to 4 hours · ₹0</div>
+      </div>
+      <ul class="res-list">
+        <li><div class="t"><a href="https://huggingface.co/spaces/pollen-robotics/microduck-simulator">Microduck Sandbox</a></div><div class="d">Official in-browser simulator: MuJoCo compiled to WebAssembly plus onnxruntime-web, running the real shipped policies at 50 Hz with gamepad support and the roller variant.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://trymicroduck.com/">trymicroduck.com</a></div><div class="d">Independent page with the official physics model and policies in the browser; the walk is computed by the network 50 times a second, not animated.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://github.com/taherfattahi/microduck-rigid-body-kinematic-viewer">Kinematic viewer</a> · <a href="https://huggingface.co/spaces/mishig/microduck-anatomy">Anatomy</a></div><div class="d">Drag each joint through its real range; exploded assembly views of the 70-part model. The fastest way to understand what the 15 servos do.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://www.youtube.com/watch?v=RAtzEyGBGFU">“We made a new robot.”</a> · <a href="https://www.youtube.com/watch?v=szW7N_7B3tU">Sim 2 Real</a></div><div class="d">Pollen's launch film and the official side-by-side of each policy in simulation and on the robot.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://news.ycombinator.com/item?id=49462763">Hacker News launch thread</a></div><div class="d">700+ points; Pollen engineers answer questions about servos, heat, price and the roadmap. Read before forming opinions.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://github.com/pollen-robotics/microduck/blob/main/docs/design/architecture.md">Architecture doc</a></div><div class="d">One page on how the daemons, the bus, the policies and the updater fit together. Then the <a href="https://github.com/pollen-robotics/microduck/blob/main/docs/project/roadmap.md">roadmap</a> (M1 to M9).</div><div class="m"><span class="chip free">free</span></div></li>
+      </ul>
+    </article>
+
+    <article class="level">
+      <div class="lvl-head">
+        <div class="n">1</div>
+        <h3>Reinforcement learning, properly</h3>
+        <p>Enough RL to read a PPO config and a reward function without guessing. Skip if you have trained PPO on a Gymnasium task before.</p>
+        <div class="hours">60 to 100 hours</div>
+      </div>
+      <ul class="res-list">
+        <li><div class="t"><a href="https://huggingface.co/learn/deep-rl-course/unit0/introduction">Hugging Face Deep RL Course</a></div><div class="d">Course · From Q-learning to PPO with hands-on notebooks and a certificate. Unit 8 (PPO) is exactly what microduck_rl uses.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="http://incompleteideas.net/book/the-book-2nd.html">Sutton &amp; Barto, <i>Reinforcement Learning: An Introduction</i> (2e)</a></div><div class="d">Book · The reference text; free PDF from the authors. Read Parts I and II; skim III.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://spinningup.openai.com/">OpenAI Spinning Up</a></div><div class="d">Docs · The clearest short derivations of policy gradient and PPO, with reference implementations.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://www.davidsilver.uk/teaching/">David Silver's UCL RL lectures</a></div><div class="d">Video course · Ten lectures, the classic foundation. Pair with Sutton &amp; Barto.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://rail.eecs.berkeley.edu/deeprlcourse/">Berkeley CS 285: Deep RL</a></div><div class="d">Video course · Sergey Levine's graduate course; the lectures on policy gradients, actor-critic and sim-to-real are the relevant ones.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://www.manning.com/books/grokking-deep-reinforcement-learning">Morales, <i>Grokking Deep Reinforcement Learning</i></a></div><div class="d">Book · Gentler than Sutton &amp; Barto, heavy on diagrams. Good if the maths is new.</div><div class="m"><span class="chip paid">paid</span></div></li>
+        <li><div class="t"><a href="https://mml-book.github.io/">Deisenroth et al., <i>Mathematics for Machine Learning</i></a></div><div class="d">Book · Linear algebra, calculus and probability refresher, free PDF. Only the chapters you find yourself missing.</div><div class="m"><span class="chip free">free</span></div></li>
+      </ul>
+    </article>
+
+    <article class="level">
+      <div class="lvl-head">
+        <div class="n">2</div>
+        <h3>Legged locomotion and sim-to-real</h3>
+        <p>Why a biped is hard, what domain randomisation is for, and why actuator models matter more than reward hacking.</p>
+        <div class="hours">40 to 80 hours</div>
+      </div>
+      <ul class="res-list">
+        <li><div class="t"><a href="https://underactuated.mit.edu/">Tedrake, <i>Underactuated Robotics</i></a></div><div class="d">Book + MIT course · Dynamics, walking, and the control view of RL. Chapters on the simple walking models and on policy search.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="http://hades.mech.northwestern.edu/index.php/Modern_Robotics">Lynch &amp; Park, <i>Modern Robotics</i></a></div><div class="d">Book + Coursera specialisation · Kinematics and dynamics you need to read a URDF/MJCF intelligently. Free PDF and videos.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://mujoco.readthedocs.io/">MuJoCo documentation</a> · <a href="https://github.com/google-deepmind/mujoco_playground">MuJoCo Playground</a> · <a href="https://github.com/mujocolab/mjlab">mjlab</a></div><div class="d">Docs · The physics engine every Microduck policy is trained in, DeepMind's RL environments on it, and the MuJoCo Warp framework microduck_rl is built on.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://arxiv.org/abs/2109.11978">Rudin et al., “Learning to Walk in Minutes Using Massively Parallel Deep RL” (2021)</a></div><div class="d">Paper · The thousands-of-robots-in-parallel recipe that mjlab, Isaac Lab and the GTC demo all descend from. Code: <a href="https://github.com/leggedrobotics/legged_gym">legged_gym</a> / <a href="https://github.com/leggedrobotics/rsl_rl">rsl_rl</a>.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://arxiv.org/abs/1804.10332">Tan et al., “Sim-to-Real: Learning Agile Locomotion for Quadruped Robots” (2018)</a> · <a href="https://arxiv.org/abs/1710.06537">Peng et al., “Dynamics Randomization” (2018)</a></div><div class="d">Papers · Where accurate actuator modelling plus domain randomisation became the standard sim-to-real approach.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://arxiv.org/abs/1901.08652">Hwangbo et al., “Learning agile and dynamic motor skills for legged robots” (Science Robotics 2019)</a></div><div class="d">Paper · Learned actuator networks for ANYmal; the idea BAM later makes cheap for hobby servos.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://arxiv.org/abs/2410.08650">Rhoban, “Extended Friction Models for the Physics Simulation of Servo Actuators” (BAM)</a> · <a href="https://github.com/Rhoban/bam">Rhoban/bam</a></div><div class="d">Paper + code · The actuator model inside microduck_rl. Identifies friction from a pendulum test bench; a bench you can build for a few thousand rupees (see Build).</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://la.disneyresearch.com/publication/design-and-control-of-a-bipedal-robotic-character/">Disney Research, “Design and Control of a Bipedal Robotic Character” (RSS 2024)</a></div><div class="d">Paper · The BDX droid that Open Duck Mini, and therefore Microduck, imitate. RL with artist-directed motion references.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://onlinecourses.nptel.ac.in/">NPTEL: Control Engineering for Robotics (IIT Guwahati)</a></div><div class="d">Course · Classical control background from an Indian platform; search the NPTEL catalogue for the current run. Optional but useful for PD gains and stability intuition.</div><div class="m"><span class="chip free">free</span></div></li>
+      </ul>
+    </article>
+
+    <article class="level">
+      <div class="lvl-head">
+        <div class="n">3</div>
+        <h3>The Microduck stack itself</h3>
+        <p>Train a gait, export ONNX, drive it in CPU MuJoCo, publish to the Hub. Everything here runs without the robot. Pick the path that matches your machine.</p>
+        <div class="hours">20 to 60 hours · ₹0 to ₹500 of cloud GPU</div>
+      </div>
+      <ul class="res-list">
+        <li><div class="t"><a href="https://github.com/pollen-robotics/microduck_rl">microduck_rl</a> + its <code>AGENTS.md</code></div><div class="d">Repo · The official training environments and the distilled reward-design playbook. Needs a CUDA GPU locally, or <code>--hf-jobs</code>.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://huggingface.co/blog/nvidia/microduck-isaac-lab-sim-to-real">NVIDIA + HF: “Train in Simulation, Deploy on a Real Robot”</a></div><div class="d">Tutorial · The Isaac Lab + Newton route from this week's news. Needs an RTX GPU; the concepts transfer to mjlab.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://github.com/kingsleyli920/microduck-academy">Microduck Academy (classroom)</a></div><div class="d">Course · Staged RL classroom for software engineers new to the field: read the task, write Python, run tests, end in the official simulator. Independent, bilingual.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://github.com/rocPAI-Forge/microduck_rl_tutorial">microduck_rl_tutorial</a></div><div class="d">Jupyter course · RL fundamentals through a train-from-scratch and evaluation against a reference checkpoint. Written for AMD ROCm; the notebooks read fine anywhere.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t">No NVIDIA GPU? <a href="https://github.com/heranhe/microduck-lab-cloud">microduck-lab (Colab)</a> · <a href="https://github.com/bsprenger/microduck-rl-torch">microduck-rl-torch</a> · <a href="https://github.com/tailong-wu/microduck-mjbatch">microduck-mjbatch</a> · <a href="https://github.com/jonathanhawkins/microduck-lab">Apple Silicon lab</a></div><div class="d">Ports · Google Colab GPU path; a PyTorch-native rewrite for machines without CUDA; a CPU-only trainer that solved a walk in 2 h 36 min on 8 vCPU; and a Mac path. Windows: <a href="https://github.com/CdyDoodle/maxy_duck">maxy_duck</a> (native sim + WSL training).</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://huggingface.co/spaces/ysharma/gr-workflow-microduck-school">Microduck School</a> · <a href="https://huggingface.co/spaces/tfrere/microduck-academy">Microduck Academy (HF Jobs)</a></div><div class="d">Hosted · Type a lesson in plain English, watch the duck fail and improve. Training runs on your own HF account, about $0.80/hour on an L4; a walking policy is roughly $1 to $2.</div><div class="m"><span class="chip paid">cloud</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://github.com/srayuth089/microduck-docker">microduck-docker</a></div><div class="d">Container · Simulator, physics and pretrained policies in one <code>docker run</code>. The quickest local setup.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://huggingface.co/spaces/pollen-robotics/microduck-arena">Microduck Arena</a></div><div class="d">Leaderboard · Submit a policy, it is raced server-side on a fixed course over five seeds. The 2 m sprint is a perfect first project.</div><div class="m"><span class="chip free">free</span><span class="chip tag">sim</span></div></li>
+        <li><div class="t"><a href="https://github.com/Qi-hub-dot/microduck-locomotion-diagnosis">Locomotion diagnosis</a> · <a href="https://github.com/xinhuagu/my-microduck-journal">my-microduck-journal</a></div><div class="d">Case studies · One reproduces an upstream issue where the walk converges to standing still and finds three reward bugs; the other retrains every skill on one consumer GPU and writes down every dead end. Read these before your first training run.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://discord.com/invite/pollen-community-519098054377340948">Pollen Discord</a> · <a href="https://github.com/joeynyc/awesome-microduck">awesome-microduck</a></div><div class="d">Community · Where the team answers questions, and the curated list this guide draws on (200+ projects, updated often).</div><div class="m"><span class="chip free">free</span></div></li>
+      </ul>
+    </article>
+
+    <article class="level">
+      <div class="lvl-head">
+        <div class="n">4</div>
+        <h3>Hardware and mechatronics</h3>
+        <p>Bus servos, IMUs, power, printing, calibration. Only needed if you build. Start with the fully open design, then read the replica teardowns.</p>
+        <div class="hours">40+ hours · see Budget</div>
+      </div>
+      <ul class="res-list">
+        <li><div class="t"><a href="https://github.com/apirrone/Open_Duck_Mini">Open Duck Mini v2</a> · <a href="https://cad.onshape.com/documents/64074dfcfa379b37d8a47762/w/3650ab4221e215a4f65eb7fe/e/0505c262d882183a25049d05">Onshape CAD</a> · <a href="https://docs.google.com/spreadsheets/d/1gq4iWWHEJVgAA_eemkTEsshXqrYlFxXAPwO515KpCJc/edit?usp=sharing">BOM</a> · <a href="https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/assembly_guide.md">assembly guide</a> · <a href="https://github.com/apirrone/Open_Duck_Mini_Runtime">runtime</a></div><div class="d">The open-hardware duck by Antoine Pirrone (Pollen R&amp;D): 42 cm, 14× Feetech STS3215, Raspberry Pi Zero 2 W, BNO055, pre-built Pi image. Sponsored by Hugging Face and Pollen.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://tnkr.ai/explore/docs/open-duck-mini/open-duck-mini-v2">Tnkr build guide for Open Duck Mini v2</a></div><div class="d">Guide · The step-by-step build walkthrough the Open Duck README now points to.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://github.com/dev-ansh-r/jero">Jero (Nunnari Labs, India)</a></div><div class="d">Build log · An Open Duck Mini v2 sourced in India for an October 2026 showcase, with a Jetson “brain” over Wi-Fi. Proof the parts are buyable here.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://github.com/AI-FanGe/Microduck-build-tutorial">AI-FanGe Microduck build tutorial</a> · <a href="https://openelab.io/da/blogs/robotics/microduck-build-guide-openelab">OpenELAB write-up</a></div><div class="d">Build · The one replica with walking hardware on video: 14× XL330-M288-T, Pi Zero 2 W, OpenRB-150, BNO08x, flashable image. The write-up is the best English assembly, wiring and servo-ID reference.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://github.com/fanhao375/microduck-replica">microduck-replica</a> · <a href="https://github.com/fanhao375/microduck-replica-cad">replica CAD</a></div><div class="d">Teardown · Assembly drawings, fastener list, electronics teardown and the definitive actuator-selection analysis (why XL330, why not STS3215, why not steppers). 56 editable SolidWorks parts in the companion repo.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://github.com/Shiyao-Huang/ChinaMicroDuck">ChinaMicroDuck</a> · <a href="https://github.com/AiBoBoMaker/MicroDuck-BoBoRedesign">BoBoRedesign</a> · <a href="https://ley-wl.github.io/microduck-guide/">3D assembly guide</a></div><div class="d">Replica resources · Four costed manufacturing routes and a licence audit; every part redesigned for FDM/SLA printing; a step-through assembly with servo IDs. Mostly Chinese, machine-translation friendly.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://emanual.robotis.com/docs/en/dxl/x/xl330-m288/">Dynamixel XL330-M288-T e-manual</a> · <a href="https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/">Dynamixel Wizard 2.0</a></div><div class="d">Docs · Control table, electrical limits and the tool you use to set IDs, baud rate and PWM slope one servo at a time.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://github.com/Rhoban/bam">BAM actuator identification</a></div><div class="d">Code · Build the pendulum bench, record trajectories, fit the friction model. The cheapest real-hardware project on this page and the most educational.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://huggingface.co/learn/robotics-course/en/unit0/1">Hugging Face Robotics Course (LeRobot)</a></div><div class="d">Course · Classical to learning-based robotics with LeRobot. Broader than bipeds; the STS3215 bus servo knowledge carries over to Open Duck Mini.</div><div class="m"><span class="chip free">free</span></div></li>
+        <li><div class="t"><a href="https://duck.whatled.com">WhatDuck</a></div><div class="d">Course · Four handbooks, a thirty-lesson course and 200 deep readings of the official code and hardware, from the Chinese replication community.</div><div class="m"><span class="chip free">free</span></div></li>
+      </ul>
+    </article>
+
+  </div>
+</section>
+
+<!-- ===================== 05 BUILD ===================== -->
+<section class="section" id="build" aria-labelledby="build-title">
+  <div class="section-head">
+    <div>
+      <p class="kicker">05 · Build routes</p>
+      <h2 id="build-title">Four ways to get a duck. Only one is cheap.</h2>
+    </div>
+    <div class="lede">
+      <p>The uncomfortable fact first: fifteen Dynamixel XL330s cost more than the whole $399 robot. Pollen's price is a volume price. Below are the routes ranked by how close they get to “the exact same thing”, with the honest cost of each.</p>
+    </div>
+  </div>
+
+  <div class="routes">
+    <article class="route">
+      <div class="n">ROUTE A · EXACT</div>
+      <h3>Buy the Microduck</h3>
+      <div class="price">$399<small>+ $39 charger pack recommended · before tax, shipping, duty</small></div>
+      <p>The only way to get the real hardware, the NPU, the ToF sensor, the NFC and the signed update channel.</p>
+      <ul>
+        <li>Launch markets: North America, Europe, UK. India is not listed yet.</li>
+        <li>Pre-order now, delivery targeted Dec 2026.</li>
+        <li>Spares only via the $119 Dev pack.</li>
+      </ul>
+      <div class="verdict"><span class="chip fact">fact</span> Cheapest path to the exact robot, if and when it ships to India or you have a forwarding address.</div>
+    </article>
+
+    <article class="route">
+      <div class="n">ROUTE B · CLOSEST REPLICA</div>
+      <h3>XL330 replica</h3>
+      <div class="price">₹60k to 1.2L<small>parts, prints, tools, 10% spares · servos are two-thirds of it</small></div>
+      <p>Same servo family, same joint layout, printed from the public meshes. One build (AI-FanGe) walks on video. No official policy runs unmodified; the public ONNX files were trained for Pollen's exact mass and IMU placement, so expect to retrain or at least re-check offsets.</p>
+      <ul>
+        <li>14 to 15× Dynamixel XL330-M288-T (import).</li>
+        <li>Pi Zero 2 W + OpenRB-150, or Radxa Zero 3W to match the original.</li>
+        <li>BNO085 IMU, 2S pack, 5 V buck, PLA prints.</li>
+      </ul>
+      <div class="verdict"><span class="chip est">estimate</span> For people who want the Microduck form factor specifically and accept paying more than retail.</div>
+    </article>
+
+    <article class="route pick">
+      <div class="n">ROUTE C · OPEN HARDWARE</div>
+      <h3>Open Duck Mini v2</h3>
+      <div class="price">₹38k to 72k<small>everything buyable in India · ₹38k if you own a printer, controller and tools</small></div>
+      <p>The predecessor by the same engineer, fully open: BOM, Onshape CAD, print guide, assembly guide, pre-built Pi image and two walking policies. Bigger (42 cm, 2.1 kg) because it uses the heavier, cheaper Feetech STS3215.</p>
+      <ul>
+        <li>14× Feetech STS3215 (stocked by Indian shops).</li>
+        <li>Pi Zero 2 W, BNO055, USB-serial bus adapter, LiPo.</li>
+        <li>An India-sourced build (Jero) exists.</li>
+      </ul>
+      <div class="verdict"><span class="chip est">estimate</span> <b>Our pick for a real build.</b> Same RL recipe, same community, legal to share and sell parts for.</div>
+    </article>
+
+    <article class="route">
+      <div class="n">ROUTE D · ZERO RUPEES</div>
+      <h3>Simulation only</h3>
+      <div class="price">₹0<small>plus optional ₹100 to 500 of cloud GPU</small></div>
+      <p>Everything in Levels 0 to 3 of the learning path. You can train, evaluate, publish and race policies on the official Arena without owning a robot. It is the same workflow the shipped policies were made with: simulation first, transfer second.</p>
+      <ul>
+        <li>Browser sandbox, CPU MuJoCo, Colab or HF Jobs.</li>
+        <li>Publish to the Hub; install on any owner's duck later.</li>
+        <li>Zero hardware risk, zero waiting.</li>
+      </ul>
+      <div class="verdict"><span class="chip fact">fact</span> Where everyone should start. Buy hardware only after a policy you trained walks in sim.</div>
+    </article>
+  </div>
+
+  <div class="callout warn">
+    <p><b>Two safety notes before any build.</b> The original runs its XL330s above their rated 6.0 V; replicas that copy the 2S battery do too. Budget for a spare servo or two, keep an eye on heat, and never disable servo protections to “fix” a brown-out. And treat lithium packs properly: a 2S Li-ion/LiPo with a real charger and a switch on the positive lead, never a bare pack feeding a Pi directly.</p>
+  </div>
+
+  <h3 style="margin: 3rem 0 1rem">The build sequence (both DIY routes)</h3>
+  <p class="small" style="color:var(--muted);margin-bottom:1rem">Condensed from the Open Duck Mini assembly guide and the OpenELAB / AI-FanGe Microduck replica write-up. Each step is a checkpoint; do not move on until it passes.</p>
+  <ol class="steps">
+    <li><div></div><div><h3>Simulate first, buy second</h3><p>Run the official policies in CPU MuJoCo and train one gait yourself (Level 3). You will understand joint order, offsets and the observation contract before a single servo arrives.</p></div></li>
+    <li><div></div><div><h3>Order parts in two batches</h3><p>Batch one: one servo, the bus adapter, the IMU, the Pi. Prove the bus and the IMU on your desk. Batch two: the remaining servos, battery, printing. This caps your loss if a part choice is wrong.</p></div></li>
+    <li><div></div><div><h3>Print the structure</h3><p>PLA for structure, TPU where the design calls for it (Open Duck feet). Check servo cavities with one real servo before printing the full set. Replicas should use the FDM-redesigned parts (BoBoRedesign), not the raw simulation meshes.</p></div></li>
+    <li><div></div><div><h3>Configure every servo alone</h3><p>One at a time: set a unique ID, 1 Mbps baud, return delay 0, centre the horn, label it. Dynamixel Wizard 2.0 for XL330; the Feetech tool or the Open Duck scripts for STS3215. Fourteen factory-default servos on one bus cannot be told apart later.</p></div></li>
+    <li><div></div><div><h3>Assemble legs, then body, then head</h3><p>Feet up. Finish both legs before joining them to the body; install the recessed screws before the next servo covers them; keep the head open until the neck servos and (optionally) the beak are secured. Threadlocker on metal-to-metal screws.</p></div></li>
+    <li><div></div><div><h3>Wire power in two branches</h3><p>Switched battery positive splits to the servo bus directly and to a 5 V buck for the Pi. Three daisy-chains (right leg, left leg, head/neck) joined supply-to-supply, ground-to-ground, data-to-data. IMU on I²C, mounted square to the body frame, orientation matching the config.</p></div></li>
+    <li><div></div><div><h3>Flash the image, find it on Wi-Fi</h3><p>Both projects publish a ready Pi image. 2.4 GHz Wi-Fi only on the Pi Zero 2 W. SSH in, change the default password, read servo voltages and IMU before anything moves.</p></div></li>
+    <li><div></div><div><h3>Calibrate, then a supported first stand</h3><p>Zero-pose and knee offsets must match your assembly, not the tutorial's. Hold the robot, enable torque, check the neutral pose, then stand it on a clear floor with a hand ready. Walking comes last and starts at zero velocity.</p></div></li>
+    <li><div></div><div><h3>Keep a vet book</h3><p>Log hours, falls and every servo swap, the way the real robot's <code>robotctl vetbook</code> does. The data tells you when a servo is dying before it strips a gear mid-walk.</p></div></li>
+  </ol>
+</section>
+
+<!-- ===================== 06 BUDGET ===================== -->
+<section class="section" id="budget" aria-labelledby="budget-title">
+  <div class="section-head">
+    <div>
+      <p class="kicker">06 · India budget</p>
+      <h2 id="budget-title">What it costs in rupees, with the knobs exposed.</h2>
+    </div>
+    <div class="lede">
+      <p>Indian shop prices were checked on 24 Oct 2026 (Evelta, Robocraze, Robu-class stockists). Imported parts are converted at the rate you set and marked up for courier, duty and IGST, which varies by courier and declared value, so that knob is yours too.</p>
+      <div class="legend" style="margin-top:0.8rem"><span class="chip fact">fact</span> seen listed at an Indian shop <span class="chip est">estimate</span> typical range <span class="chip unc">uncertain</span> depends on import handling</div>
+    </div>
+  </div>
+
+  <div class="calc">
+    <form class="calc-controls" id="calcForm" aria-label="Budget calculator">
+      <fieldset>
+        <legend>Route</legend>
+        <div class="radio-list">
+          <label><input type="radio" name="route" value="buy"> Route A · Buy the Microduck</label>
+          <label><input type="radio" name="route" value="replica"> Route B · XL330 replica</label>
+          <label><input type="radio" name="route" value="odm" checked> Route C · Open Duck Mini v2</label>
+          <label><input type="radio" name="route" value="sim"> Route D · Simulation only</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>What you already have</legend>
+        <div class="check-list">
+          <label><input type="checkbox" name="have" value="printer"> A 3D printer (pay filament, not a print service)</label>
+          <label><input type="checkbox" name="have" value="controller"> A Bluetooth game controller</label>
+          <label><input type="checkbox" name="have" value="tools"> Soldering iron, multimeter, crimper</label>
+          <label><input type="checkbox" name="have" value="gpu"> An NVIDIA GPU (skip cloud training)</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Assumptions</legend>
+        <div class="rate" style="margin-bottom:0.6rem"><label for="rate">₹ per $</label><input id="rate" type="number" min="50" max="200" step="0.5" value="95"> <span class="small" style="color:var(--muted)">(≈95 on 23 Oct 2026)</span></div>
+        <div class="rate"><label for="imp">Import markup %</label><input id="imp" type="number" min="0" max="100" step="5" value="30"> <span class="small" style="color:var(--muted)">courier + duty + IGST</span></div>
+        <label style="display:flex;gap:0.6rem;align-items:center;margin-top:0.8rem;font-size:var(--step--1)"><input type="checkbox" id="spares" checked> Add 10% for spares and mistakes</label>
+      </fieldset>
+      <div class="total">
+        <div class="big" id="totalOut">—<small id="totalNote"></small></div>
+      </div>
+    </form>
+
+    <div class="calc-out">
+      <h3 id="bomTitle">Open Duck Mini v2 · parts list</h3>
+      <p class="note" id="bomNote"></p>
+      <div class="table-wrap">
+        <table id="bomTable" aria-live="polite">
+          <thead><tr><th>Part</th><th class="num">Qty</th><th>Where to buy</th><th class="num">₹ low</th><th class="num">₹ high</th><th>Label</th></tr></thead>
+          <tbody></tbody>
+          <tfoot><tr><td colspan="3">Total (parts)</td><td class="num" id="tLo"></td><td class="num" id="tHi"></td><td></td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin: 3.5rem 0 1rem">The low-budget ladder</h3>
+  <p class="small" style="color:var(--muted);margin-bottom:1rem">If money is tight, climb this in order. Each rung is worth doing on its own and de-risks the next.</p>
+  <div class="tiers">
+    <div class="tier"><div class="n">RUNG 0 · ₹0</div><div class="amt">Simulation</div><p>Browser sandbox, CPU MuJoCo, Colab. Train and publish a policy. Enter the Arena sprint.</p><p>Stop here until a gait you trained walks in sim.</p></div>
+    <div class="tier"><div class="n">RUNG 1 · ₹4k to 7k</div><div class="amt">One-servo bench</div><p>One STS3215 (₹1.9k to 2.3k) or one XL330 (import), a USB bus adapter (₹600 to 1.2k), a printed pendulum arm and weights.</p><p>Reproduce BAM's actuator identification. You now understand the sim-to-real gap physically.</p></div>
+    <div class="tier"><div class="n">RUNG 2 · ₹12k to 18k</div><div class="amt">One leg + IMU</div><p>Five servos, the Pi Zero 2 W, the IMU, a bench supply. Drive one leg from a policy's joint targets; log the tracking error.</p><p>Parts carry straight into the full build.</p></div>
+    <div class="tier"><div class="n">RUNG 3 · ₹38k to 72k</div><div class="amt">Open Duck Mini v2</div><p>Add nine servos, battery, prints, hardware. A walking open-hardware biped, all parts sourced in India.</p><p>Second-hand printer or a print service keeps this at the low end.</p></div>
+    <div class="tier"><div class="n">RUNG 4 · $399 + duty</div><div class="amt">Real Microduck</div><p>When India is a shipping destination, or via a forwarding address. The NPU, ToF, NFC and signed updates are not replicable at this price.</p><p>By then your policies already run in its simulator.</p></div>
+  </div>
+
+  <div class="callout" style="margin-top:2.5rem">
+    <p><b>Training compute is not a hardware cost.</b> You do not need a GPU in the house. A walking policy on Hugging Face Jobs is about an hour on an L4 at roughly $0.80 (under ₹100). Google Colab's free tier works through the Colab lab port. A CPU-only trainer (mjbatch) reached a stable walk in 2 h 36 min on 8 vCPU. Buy a GPU for robotics only when you are iterating many times a day.</p>
+  </div>
+</section>
+
+<!-- ===================== 07 RESOURCES ===================== -->
+<section class="section" id="resources" aria-labelledby="res-title">
+  <div class="section-head">
+    <div>
+      <p class="kicker">07 · Everything else</p>
+      <h2 id="res-title">The full catalogue.</h2>
+    </div>
+    <div class="lede">
+      <p>Official pages, docs, simulators, replica projects, articles, videos and the lineage, filterable. Entries marked <span class="chip tag">sim</span> have not been validated on shipped hardware; as of this writing almost nothing has.</p>
+    </div>
+  </div>
+
+  <div class="filters" role="group" aria-label="Filter resources">
+    <button class="fb" type="button" data-filter="all" aria-pressed="true">All</button>
+    <button class="fb" type="button" data-filter="official" aria-pressed="false">Official</button>
+    <button class="fb" type="button" data-filter="docs" aria-pressed="false">Docs</button>
+    <button class="fb" type="button" data-filter="sim" aria-pressed="false">Simulation &amp; training</button>
+    <button class="fb" type="button" data-filter="hardware" aria-pressed="false">Hardware &amp; replicas</button>
+    <button class="fb" type="button" data-filter="shops" aria-pressed="false">Where to buy (India)</button>
+    <button class="fb" type="button" data-filter="press" aria-pressed="false">Articles</button>
+    <button class="fb" type="button" data-filter="video" aria-pressed="false">Videos</button>
+    <button class="fb" type="button" data-filter="community" aria-pressed="false">Community &amp; lineage</button>
+    <input class="search" type="search" id="resSearch" placeholder="Search the catalogue" aria-label="Search the catalogue">
+    <span class="count" id="resCount"></span>
+  </div>
+
+  <div class="res-groups" id="resGroups"></div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="row">
+    <span>Sudish Kumar · <a href="https://sudish.dev">sudish.dev</a></span>
+    <span>Evidence cutoff 24 Oct 2026</span>
+    <span>Prices indicative; verify before ordering</span>
+    <span>Not legal, financial or safety advice</span>
+  </div>
+  <p>Independent guide. Not affiliated with, endorsed by or sponsored by Pollen Robotics, Hugging Face or NVIDIA. Microduck is a product of Pollen Robotics; every linked project belongs to its own authors under its own licence. Facts are labelled: <span class="chip fact">fact</span> stated by the maker or a primary source · <span class="chip infer">inferred</span> community evidence, not confirmed by Pollen · <span class="chip est">estimate</span> a range from listed prices · <span class="chip unc">uncertain</span> depends on factors we cannot check.</p>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
