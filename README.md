@@ -1,4 +1,4 @@
-# Microduck Field Guide
+﻿# Microduck Field Guide
 
 A source-checked, single-page guide to **Microduck**, the $399 biped from Pollen Robotics / Hugging Face:
 why it is in the news (GTC Berlin, 21 Oct 2026), what it actually is, exactly how open it is, a five-level
@@ -35,6 +35,12 @@ source **GitHub Actions** in the repository settings, then push to `main`.
 - Prices and the exchange-rate default live in `app.js` (`ROUTES`, and the `#rate` input default in `index.html`).
 - New resources go into the `RES` array in `app.js` with a group key from `GROUPS`.
 - Keep the honesty labels: `fact` (maker or primary source), `inferred` (community evidence), `estimate`, `uncertain`.
+
+## Media
+
+`media/` holds one photo (`closeup.webp`), one clip (`balance-recovery.mp4` + poster) from
+Pollen Robotics' official [press kit](https://pollen-robotics.com/microduck/press-kit/), used as press material
+with credit. They are © Pollen Robotics and are not covered by this repo's MIT licence.
 
 ## Not affiliated
 

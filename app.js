@@ -18,6 +18,21 @@
     try { localStorage.setItem('mdg-theme', next); } catch (e) {}
   });
 
+  /* ---------------- Hero video: respect reduced motion, offer a pause ---------------- */
+  var vid = document.querySelector('.hero-video');
+  var vidBtn = document.getElementById('vidToggle');
+  if (vid && vidBtn) {
+    var setBtn = function () {
+      var playing = !vid.paused;
+      vidBtn.textContent = playing ? 'Pause' : 'Play';
+      vidBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    };
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { vid.removeAttribute('autoplay'); vid.pause(); }
+    vid.addEventListener('play', setBtn); vid.addEventListener('pause', setBtn);
+    vidBtn.addEventListener('click', function () { if (vid.paused) { vid.play(); } else { vid.pause(); } });
+    setBtn();
+  }
+
   /* ---------------- Current section ---------------- */
   var sectionIds = ['news', 'robot', 'open', 'learn', 'build', 'budget', 'resources'];
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav a, .rail a'));
@@ -43,17 +58,18 @@
   var ROUTES = {
     odm: {
       title: 'Open Duck Mini v2 · parts list',
-      note: 'Fourteen Feetech STS3215 bus servos on one TTL chain, a Raspberry Pi Zero 2 W, a BNO055 IMU and a 2S lithium pack, per the published BOM and the India-sourced Jero build. Servo prices are what Indian shops list for the 7.4 V STS3215/ST3215 today; confirm the exact variant in the Open Duck BOM before ordering.',
+      note: 'Follows the published Open Duck Mini v2 BOM (author\'s total €398, lowest €331, before the optional expression package): fourteen Feetech STS3215 7.4 V bus servos on one TTL chain through a Waveshare bus-servo adapter, a Raspberry Pi Zero 2 W, a BNO055 IMU, and a 2S pack built from two 18650 cells with a BMS. Servo prices are what Indian shops list for the 7.4 V STS3215/ST3215 today; the BOM warns to buy the 7.4 V ("19 kg·cm") variant.',
       lines: [
         { name: 'Feetech STS3215 7.4 V bus servo', sub: '12-bit magnetic encoder, 1 Mbps half-duplex TTL', qty: 14, inr: [1900, 2300], where: 'Evelta (ST3215 7.4 V ₹1,885 ex GST; STS3215-C046 ₹2,224 inc), Robu.in, Robocraze; Seeed / AliExpress abroad', label: 'fact' },
         { name: 'Raspberry Pi Zero 2 W', sub: 'runs the 50 Hz policy loop; 2.4 GHz Wi-Fi only', qty: 1, inr: [1749, 2799], where: 'Evelta ₹1,749 · Robocraze ₹2,799 · QuartzComponents', label: 'fact' },
-        { name: 'USB to TTL bus-servo adapter', sub: 'Waveshare Bus Servo Adapter or FTDI board; one per robot', qty: 1, inr: [600, 1200], where: 'Robu.in, Robocraze', label: 'est' },
-        { name: 'BNO055 9-DoF IMU breakout', sub: 'I²C, mounted per the runtime config (upside-down in some builds)', qty: 1, inr: [700, 1500], where: 'Robu.in, Robocraze, Evelta', label: 'est' },
-        { name: '2S lithium pack + balance charger', sub: 'LiPo or 18650 pack sized to the Open Duck BOM; servos will not run from USB', qty: 1, inr: [1500, 3000], where: 'Robu.in, local hobby shops', label: 'est' },
-        { name: '5 V 3 A buck converter', sub: 'regulated feed for the Pi; never battery-direct', qty: 1, inr: [100, 300], where: 'Robu.in, Robocraze', label: 'est' },
-        { name: 'microSD 32 GB (A1)', sub: 'for the pre-built Open Duck Pi image', qty: 1, inr: [400, 700], where: 'anywhere', label: 'est' },
-        { name: 'Printed parts: PLA structure + TPU feet', sub: 'about 1 to 1.5 kg of filament for the 42 cm design', qty: 1, kind: 'print', inrService: [6000, 12000], inrFilament: [1800, 3000], where: 'local print service (Robu 3D printing, city makerspaces) or your own printer', label: 'est' },
-        { name: 'M3 screws, Loctite 243, wire, heat-shrink, power switch', sub: 'per the assembly guide', qty: 1, inr: [900, 1800], where: 'Robu.in, Amazon.in, local hardware', label: 'est' },
+        { name: 'Waveshare Bus Servo Adapter (A)', sub: 'USB to the Feetech TTL bus; also used to configure each servo before assembly', qty: 1, inr: [600, 1200], where: 'Robu.in, Robocraze', label: 'est' },
+        { name: 'BNO055 9-DoF IMU breakout', sub: 'I²C on the Pi header (pins 1, 3, 5, 9); orientation is set in duck_config.json', qty: 1, inr: [700, 1500], where: 'Robu.in, Robocraze, Evelta', label: 'est' },
+        { name: 'Battery: 2× 18650 cells + 2S holder + 2S BMS + USB-C charger board', sub: 'per the BOM: high-discharge cells (Molicel P30B-class, 3000 mAh / 30 A); charge both cells to the same voltage before fitting', qty: 1, inr: [1500, 2800], where: 'Robu.in (cells, BMS, holder, charger board), local hobby shops', label: 'est' },
+        { name: '5 V UBEC regulator (4 A or more) + XT30 pair + 2.1 mm barrel jacks + power switch', sub: 'the BOM\'s power chain; the Pi must never hang off the battery directly', qty: 1, inr: [700, 1500], where: 'Robu.in, Robocraze', label: 'est' },
+        { name: 'microSD 32 GB (A1)', sub: 'the pre-built duck.iso targets 32 GB cards', qty: 1, inr: [400, 700], where: 'anywhere', label: 'est' },
+        { name: 'Printed parts: 36 part types, PLA 15% infill + TPU feet 40%', sub: 'about 500 g of PLA per the BOM, plus a little TPU; STLs in the repo\'s print/ folder', qty: 1, kind: 'print', inrService: [4000, 9000], inrFilament: [600, 1200], where: 'local print service (Robu 3D printing, city makerspaces) or your own printer', label: 'est' },
+        { name: 'M3 heat-set inserts, M3 screws (M3×6, M3×10), 3 bearings, Loctite 243, cable sheath, wire, heat-shrink', sub: 'exact screw count is still a TODO in the assembly guide; buy an M3 assortment', qty: 1, inr: [900, 1800], where: 'Robu.in, Amazon.in, local hardware', label: 'est' },
+        { name: 'Optional: 4× SS-10 foot switches, 2× 9 g servos (antennas), 15 cm + 50 cm micro-USB to USB-C cables', sub: 'foot switches drive the image\'s foot-based autostart; antennas are an expression feature', qty: 1, inr: [300, 700], where: 'Robu.in, Amazon.in', label: 'est' },
         { name: 'Bluetooth game controller', sub: 'Xbox-class pad; an 8BitDo works', qty: 1, kind: 'controller', inr: [2500, 4500], where: 'Amazon.in', label: 'est' },
         { name: 'Tools: soldering kit, multimeter, crimper + JST connectors, driver set', sub: 'one-time', qty: 1, kind: 'tools', inr: [2500, 4500], where: 'Robu.in, Amazon.in', label: 'est' },
         { name: 'Cloud GPU for training', sub: 'HF Jobs L4 ≈ $0.80/h; Colab free tier also works', qty: 1, kind: 'cloud', inr: [100, 500], where: 'Hugging Face Jobs, Google Colab', label: 'est' }
@@ -61,17 +77,17 @@
     },
     replica: {
       title: 'XL330 Microduck replica · parts list',
-      note: 'Follows the AI-FanGe / OpenELAB build that walks on video: 14 XL330-M288-T under policy control plus an optional 15th for the beak, a Raspberry Pi Zero 2 W talking to the Dynamixel bus through a ROBOTIS OpenRB-150, a BNO08x IMU and a 2S pack. No Indian stockist of the XL330 was verified, so it is costed as an import at the rate and markup you set.',
+      note: 'Follows the AI-FanGe / OpenELAB build that walks on video: 14 XL330-M288-T under policy control plus an optional 15th for the beak, a Raspberry Pi Zero 2 W talking to the Dynamixel bus through a ROBOTIS OpenRB-150, a BNO08x IMU and a ready-made 6 V pack. No Indian stockist of the XL330 was verified, so it is costed as an import at the rate and markup you set.',
       lines: [
         { name: 'Dynamixel XL330-M288-T', sub: '18 g, 288:1, Protocol 2.0; 14 minimum, 15 with the beak', qty: 15, usd: [23.9, 39], where: 'ROBOTIS global store ($23.90, ships internationally), ROBOTIS US ($27.49), Generation Robots (€33.50 ex VAT), OpenELAB. No Indian stock found 24 Oct 2026', label: 'unc' },
         { name: 'Raspberry Pi Zero 2 W', sub: 'or a Radxa Zero 3W (RK3566, import ≈ $35 to 45) to match the original SoC', qty: 1, inr: [1749, 2799], where: 'Evelta ₹1,749 · Robocraze ₹2,799', label: 'fact' },
         { name: 'ROBOTIS OpenRB-150', sub: 'USB to Dynamixel bus bridge; U2D2 ($36.92) is the alternative', qty: 1, usd: [25, 30], where: 'ROBOTIS store (import)', label: 'unc' },
         { name: 'BNO085 / BNO086 9-DoF IMU breakout', sub: 'I²C to the Pi; mount square to the body frame', qty: 1, inr: [1775, 2399], where: 'Evelta (7Semi BNO085 ₹1,775 ex GST), Robocraze ₹2,095 to 2,399', label: 'fact' },
-        { name: '2S battery: NP-F550-compatible pack + charger, or 2S 18650 pack', sub: 'the original runs the XL330s at 6.6 to 8.2 V from this pack, above their 6.0 V rating', qty: 1, inr: [1200, 2500], where: 'Amazon.in, camera shops, Robu.in', label: 'est' },
+        { name: 'Ready-made 6 V rechargeable pack + charger (the tutorial\'s choice)', sub: 'keeps the XL330s inside their 6.0 V rating and matches the tutorial\'s walk.onnx; the original instead runs a 2S NP-F550 at 6.6 to 8.2 V for more torque, at the cost of heat', qty: 1, inr: [1200, 2500], where: 'Robu.in, Amazon.in (6 V NiMH/Li-ion packs with enough peak current for 14 servos)', label: 'est' },
         { name: '5 V 3 A buck converter', sub: 'Pi power; servo bus fed from the battery branch', qty: 1, inr: [100, 300], where: 'Robu.in, Robocraze', label: 'est' },
         { name: 'microSD 32 GB (A1)', sub: 'for the build tutorial image', qty: 1, inr: [400, 700], where: 'anywhere', label: 'est' },
         { name: 'Printed parts: PLA (FDM-redesigned set)', sub: 'about 0.5 kg; use BoBoRedesign or the tutorial\'s Bambu profiles, not raw sim meshes', qty: 1, kind: 'print', inrService: [3500, 8000], inrFilament: [700, 1200], where: 'local print service or your own printer', label: 'est' },
-        { name: 'M2 screws, Dynamixel X3P cables, switch, wire', sub: 'short 3-pin cables are the fiddly import item', qty: 1, inr: [1200, 2500], where: 'ROBOTIS (cables), Robu.in, Amazon.in', label: 'est' },
+        { name: 'M2/M2.5 self-tapping screws, POM and steel shims, Dynamixel 3-pin cables, JST-EH terminals, switch, wire, heat-shrink', sub: 'short 3-pin cables are the fiddly import item; the shims are the joints\' low-cost bearings', qty: 1, inr: [1200, 2500], where: 'ROBOTIS (cables), Robu.in, Amazon.in', label: 'est' },
         { name: 'Bluetooth game controller', sub: 'Xbox-class pad', qty: 1, kind: 'controller', inr: [2500, 4500], where: 'Amazon.in', label: 'est' },
         { name: 'Tools: soldering kit, multimeter, crimper, driver set', sub: 'one-time', qty: 1, kind: 'tools', inr: [2500, 4500], where: 'Robu.in, Amazon.in', label: 'est' },
         { name: 'Cloud GPU for retraining', sub: 'your mass and IMU placement differ from Pollen\'s; expect to retrain', qty: 1, kind: 'cloud', inr: [100, 500], where: 'Hugging Face Jobs, Google Colab', label: 'est' }
@@ -246,13 +262,18 @@
     { g: 'hardware', t: 'Open Duck Mini v2 (hub)', u: 'https://github.com/apirrone/Open_Duck_Mini', d: 'The open-hardware predecessor: BOM, Onshape CAD, print and assembly guides, two walking policies. Apache-2.0.' },
     { g: 'hardware', t: 'Open Duck Mini v2 · Onshape CAD', u: 'https://cad.onshape.com/documents/64074dfcfa379b37d8a47762/w/3650ab4221e215a4f65eb7fe/e/0505c262d882183a25049d05', d: 'Editable mechanical design.' },
     { g: 'hardware', t: 'Open Duck Mini v2 · BOM (Google Sheet)', u: 'https://docs.google.com/spreadsheets/d/1gq4iWWHEJVgAA_eemkTEsshXqrYlFxXAPwO515KpCJc/edit?usp=sharing', d: 'The official parts list; target under $400.' },
-    { g: 'hardware', t: 'Open Duck Mini v2 · assembly guide', u: 'https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/assembly_guide.md', d: 'Soldering, M3 screws, Loctite 243, servo-first configuration. Marked incomplete by the author.' },
-    { g: 'hardware', t: 'Open Duck Mini Runtime (Pi image)', u: 'https://github.com/apirrone/Open_Duck_Mini_Runtime', d: 'Ready-to-flash Raspberry Pi image and the policy runner.' },
+    { g: 'hardware', t: 'Open Duck Mini v2 · assembly guide', u: 'https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/assembly_guide.md', d: 'Trunk to body with a photo per step, Pi header pin map, battery pack. Screw count and expression features still TODO.' },
+    { g: 'hardware', t: 'Open Duck Mini v2 · print guide + STLs', u: 'https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/print_guide.md', d: '36 part types in print/: PLA 15% infill, foot_bottom_tpu in TPU at 40%.' },
+    { g: 'hardware', t: 'Open Duck Mini v2 · configure motors', u: 'https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/configure_motors.md', d: 'configure_motor.py --id N per servo before assembly; the ID map (10-14, 20-24, 30-33).' },
+    { g: 'hardware', t: 'Open Duck Mini v2 · wiring diagram', u: 'https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/open_duck_mini_v2_wiring_diagram.png', d: 'Power chain (2S cells, BMS, UBEC, switch) and the servo bus; a second schematic sits beside it as wiring.png.' },
+    { g: 'hardware', t: 'Open Duck Mini v2 · sim2real notes', u: 'https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/sim2real.md', d: 'Onshape-to-robot export, BAM parameters for the STS3215, Disney-style imitation reward. Headed “not finalized yet”.' },
+    { g: 'hardware', t: 'Open Duck Mini Runtime (Pi image)', u: 'https://github.com/apirrone/Open_Duck_Mini_Runtime/blob/v2/docs/INSTALL.md', d: 'duck.iso for 32 GB cards, user bdxv2, “Openduck” fallback hotspot, foot-switch autostart. Motor and IMU calibration still required.' },
     { g: 'hardware', t: 'Open Duck Playground (training)', u: 'https://github.com/apirrone/Open_Duck_Playground', d: 'MuJoCo Playground environments for Open Duck Mini.' , tags: ['sim'] },
     { g: 'hardware', t: 'Tnkr build guide (Open Duck Mini v2)', u: 'https://tnkr.ai/explore/docs/open-duck-mini/open-duck-mini-v2', d: 'The step-by-step guide the README now recommends.' },
     { g: 'hardware', t: 'Jero (Nunnari Labs, India)', u: 'https://github.com/dev-ansh-r/jero', d: 'Open Duck Mini v2 sourced in India: 14× STS3215, Pi Zero 2 W, Jetson brain over Wi-Fi, gated build plan.' },
     { g: 'hardware', t: 'open-duck-mini deployment workspace', u: 'https://github.com/LIJianxuanLeo/open-duck-mini', d: 'Calibration tooling and Pi provisioning for a physical v2: FTDI bus at 1 Mbps, BNO055 on I²C.' },
-    { g: 'hardware', t: 'AI-FanGe Microduck build tutorial', u: 'https://github.com/AI-FanGe/Microduck-build-tutorial', d: 'Working replica on Pi Zero 2 W + OpenRB-150 + 14× XL330: wiring, image, deployment code, mjlab env. Walking on video.' },
+    { g: 'hardware', t: 'AI-FanGe Microduck build tutorial', u: 'https://github.com/AI-FanGe/Microduck-build-tutorial', d: 'Working replica on Pi Zero 2 W + OpenRB-150 + 14× XL330 + 6 V pack: BOM, servo IDs, wiring, printable CAD, flashable image, mjlab env.' },
+    { g: 'video', t: 'AI-FanGe · Microduck replica build video', u: 'https://www.youtube.com/watch?v=Vep8AjoCnEM', d: 'The hands-on assembly the OpenELAB write-up is based on; walking hardware shown.' },
     { g: 'hardware', t: 'OpenELAB build guide (English write-up)', u: 'https://openelab.io/da/blogs/robotics/microduck-build-guide-openelab', d: 'Parts table, servo ID map, three bus branches, power split, IMU orientation, first steps.' },
     { g: 'hardware', t: 'OpenELAB: Microduck vs Open Duck Mini', u: 'https://openelab.io/nl/blogs/learn/microduck-vs-open-duck-mini', d: 'Buy or build, decided in five questions.' },
     { g: 'hardware', t: 'Microduck DIY build docs', u: 'https://github.com/wslengzhicheng/microduck-diy', d: 'BOM, printing, wiring, phased assembly, servo and IMU commissioning. Apache-2.0, Chinese.' },

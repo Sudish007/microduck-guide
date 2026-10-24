@@ -80,63 +80,11 @@
     </div>
   </div>
 
-  <figure class="duck-figure" aria-describedby="duck-cap">
-    <svg viewBox="0 0 620 600" role="img" aria-label="Side-view schematic of the Microduck with its fifteen joints and main components labelled">
-      <!-- leaders -->
-      <g class="lead" fill="none">
-        <path d="M352 118 L466 60"/>
-        <path d="M277 104 L150 64"/>
-        <path d="M344 158 L466 190"/>
-        <path d="M312 165 L170 150"/>
-        <path d="M258 285 L192 300"/>
-        <path d="M232 340 L200 380"/>
-        <path d="M322 425 L466 440"/>
-        <path d="M236 492 L172 520"/>
-        <path d="M396 134 L466 110"/>
-      </g>
-      <!-- head -->
-      <rect class="shell" x="248" y="86" width="136" height="86" rx="24"/>
-      <polygon class="beak" points="382,118 476,138 382,156"/>
-      <circle class="eye" cx="352" cy="118" r="6"/>
-      <circle class="rec" cx="277" cy="104" r="4"/>
-      <rect x="334" y="152" width="22" height="9" fill="var(--ink)"/>
-      <!-- neck -->
-      <rect x="296" y="170" width="18" height="36" fill="var(--ink)"/>
-      <!-- body -->
-      <rect class="shell" x="150" y="204" width="226" height="150" rx="44"/>
-      <!-- legs -->
-      <polyline class="leg" points="232,340 214,424 238,492"/>
-      <polyline class="leg" points="302,344 322,424 304,492"/>
-      <rect class="foot" x="190" y="490" width="86" height="14"/>
-      <rect class="foot" x="266" y="490" width="86" height="14" opacity="0.85"/>
-      <!-- joints -->
-      <g class="joint">
-        <circle cx="312" cy="165" r="7"/>
-        <circle cx="305" cy="200" r="7"/>
-        <circle cx="330" cy="128" r="5"/>
-        <circle cx="396" cy="134" r="5"/>
-        <circle cx="232" cy="340" r="9"/>
-        <circle cx="302" cy="344" r="9"/>
-        <circle cx="214" cy="424" r="7"/>
-        <circle cx="322" cy="424" r="7"/>
-        <circle cx="238" cy="492" r="7"/>
-        <circle cx="304" cy="492" r="7"/>
-      </g>
-      <!-- labels -->
-      <g class="lbl">
-        <text x="474" y="56">camera (REC light)</text>
-        <text x="474" y="106">beak servo · grasp</text>
-        <text x="474" y="194">8×8 ToF “LiDAR”</text>
-        <text x="474" y="444">knee · ankle × 2</text>
-        <text x="16" y="60">head IMU · mics</text>
-        <text x="16" y="146">neck pitch + head</text>
-        <text x="16" y="296">RK3566 · 1 GB · NPU</text>
-        <text x="16" y="376">hip yaw/roll/pitch × 2</text>
-        <text x="16" y="516">NP-F550 2S battery</text>
-        <text x="16" y="586">15 servos · 14 under policy control · 50 Hz</text>
-      </g>
-    </svg>
-    <figcaption id="duck-cap">Schematic, not to scale. Joint layout from the public MJCF model; servo family is inferred by the community (see §02).</figcaption>
+  <figure class="hero-media">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="media/balance-recovery-poster.jpg" aria-label="Microduck knocked over on a wooden floor, then standing itself back up">
+      <source src="media/balance-recovery.mp4" type="video/mp4">
+    </video>
+    <figcaption>Knocked over, then back on its feet: the “get back up” policy on the real robot. Clip and photos: Pollen Robotics press kit, used as press material. <button type="button" class="vid-toggle" id="vidToggle" aria-pressed="true">Pause</button></figcaption>
   </figure>
 </section>
 
@@ -275,6 +223,70 @@ uv run scripts/infer_policy.py --walking output.onnx</code></pre>
         <li>The compute board is RK3566-class (Radxa Zero 3W is the usual guess from the teardowns); Pollen states only the SoC.</li>
       </ul>
     </div>
+  </div>
+  <div class="robot-visuals">
+    <figure class="robot-photo">
+      <img src="media/closeup.webp" width="1012" height="1800" loading="lazy" alt="Microduck standing on a wooden desk at golden hour: cream shell, orange beak and feet, black servos visible in the legs and neck">
+      <figcaption>The real thing, cream colourway, on a desk. Photo: Pollen Robotics press kit.</figcaption>
+    </figure>
+    <figure class="duck-figure" aria-describedby="duck-cap">
+    <svg viewBox="0 0 620 600" role="img" aria-label="Side-view schematic of the Microduck with its fifteen joints and main components labelled">
+      <!-- leaders -->
+      <g class="lead" fill="none">
+        <path d="M352 118 L466 60"/>
+        <path d="M277 104 L150 64"/>
+        <path d="M344 158 L466 190"/>
+        <path d="M312 165 L170 150"/>
+        <path d="M258 285 L192 300"/>
+        <path d="M232 340 L200 380"/>
+        <path d="M322 425 L466 440"/>
+        <path d="M236 492 L172 520"/>
+        <path d="M396 134 L466 110"/>
+      </g>
+      <!-- head -->
+      <rect class="shell" x="248" y="86" width="136" height="86" rx="24"/>
+      <polygon class="beak" points="382,118 476,138 382,156"/>
+      <circle class="eye" cx="352" cy="118" r="6"/>
+      <circle class="rec" cx="277" cy="104" r="4"/>
+      <rect x="334" y="152" width="22" height="9" fill="var(--ink)"/>
+      <!-- neck -->
+      <rect x="296" y="170" width="18" height="36" fill="var(--ink)"/>
+      <!-- body -->
+      <rect class="shell" x="150" y="204" width="226" height="150" rx="44"/>
+      <!-- legs -->
+      <polyline class="leg" points="232,340 214,424 238,492"/>
+      <polyline class="leg" points="302,344 322,424 304,492"/>
+      <rect class="foot" x="190" y="490" width="86" height="14"/>
+      <rect class="foot" x="266" y="490" width="86" height="14" opacity="0.85"/>
+      <!-- joints -->
+      <g class="joint">
+        <circle cx="312" cy="165" r="7"/>
+        <circle cx="305" cy="200" r="7"/>
+        <circle cx="330" cy="128" r="5"/>
+        <circle cx="396" cy="134" r="5"/>
+        <circle cx="232" cy="340" r="9"/>
+        <circle cx="302" cy="344" r="9"/>
+        <circle cx="214" cy="424" r="7"/>
+        <circle cx="322" cy="424" r="7"/>
+        <circle cx="238" cy="492" r="7"/>
+        <circle cx="304" cy="492" r="7"/>
+      </g>
+      <!-- labels -->
+      <g class="lbl">
+        <text x="474" y="56">camera (REC light)</text>
+        <text x="474" y="106">beak servo · grasp</text>
+        <text x="474" y="194">8×8 ToF “LiDAR”</text>
+        <text x="474" y="444">knee · ankle × 2</text>
+        <text x="16" y="60">head IMU · mics</text>
+        <text x="16" y="146">neck pitch + head</text>
+        <text x="16" y="296">RK3566 · 1 GB · NPU</text>
+        <text x="16" y="376">hip yaw/roll/pitch × 2</text>
+        <text x="16" y="516">NP-F550 2S battery</text>
+        <text x="16" y="586">15 servos · 14 under policy control · 50 Hz</text>
+      </g>
+    </svg>
+    <figcaption id="duck-cap">Schematic, not to scale. Joint layout from the public MJCF model; servo family is inferred by the community (see §02).</figcaption>
+  </figure>
   </div>
 </section>
 
@@ -464,7 +476,7 @@ uv run scripts/infer_policy.py --walking output.onnx</code></pre>
       <ul>
         <li>14 to 15× Dynamixel XL330-M288-T (import).</li>
         <li>Pi Zero 2 W + OpenRB-150, or Radxa Zero 3W to match the original.</li>
-        <li>BNO085 IMU, 2S pack, 5 V buck, PLA prints.</li>
+        <li>BNO085 IMU, ready-made 6 V pack, 5 V regulator, PLA prints.</li>
       </ul>
       <div class="verdict"><span class="chip est">estimate</span> For people who want the Microduck form factor specifically and accept paying more than retail.</div>
     </article>
@@ -476,7 +488,7 @@ uv run scripts/infer_policy.py --walking output.onnx</code></pre>
       <p>The predecessor by the same engineer, fully open: BOM, Onshape CAD, print guide, assembly guide, pre-built Pi image and two walking policies. Bigger (42 cm, 2.1 kg) because it uses the heavier, cheaper Feetech STS3215.</p>
       <ul>
         <li>14× Feetech STS3215 (stocked by Indian shops).</li>
-        <li>Pi Zero 2 W, BNO055, USB-serial bus adapter, LiPo.</li>
+        <li>Pi Zero 2 W, BNO055, Waveshare bus adapter, 2× 18650 with a BMS.</li>
         <li>An India-sourced build (Jero) exists.</li>
       </ul>
       <div class="verdict"><span class="chip est">estimate</span> <b>Our pick for a real build.</b> Same RL recipe, same community, legal to share and sell parts for.</div>
@@ -500,6 +512,74 @@ uv run scripts/infer_policy.py --walking output.onnx</code></pre>
     <p><b>Two safety notes before any build.</b> The original runs its XL330s above their rated 6.0 V; replicas that copy the 2S battery do too. Budget for a spare servo or two, keep an eye on heat, and never disable servo protections to “fix” a brown-out. And treat lithium packs properly: a 2S Li-ion/LiPo with a real charger and a switch on the positive lead, never a bare pack feeding a Pi directly.</p>
   </div>
 
+  <h3 style="margin: 3rem 0 0.6rem">Everything a home build needs, checked against the upstream repos</h3>
+  <p class="small" style="color:var(--muted);margin-bottom:1.2rem">We opened each document on 24 Oct 2026. <span class="chip fact">fact</span> means the file exists and says what we claim; gaps are stated, not papered over. Parts and prices are in the Budget section; this is the rest.</p>
+
+  <div class="kit">
+    <article class="kit-col">
+      <h4>Route C · Open Duck Mini v2 <span class="chip fact">complete, with two gaps</span></h4>
+      <dl class="kit-list">
+        <dt>Parts list</dt><dd><a href="https://docs.google.com/spreadsheets/d/1gq4iWWHEJVgAA_eemkTEsshXqrYlFxXAPwO515KpCJc/edit?usp=sharing">BOM sheet</a>: every part with a purchase link, quantity and price (author's total €398, lowest €331), plus the optional “expression package” (speaker, LEDs, camera, microphone; €34 more). Buy the 7.4 V STS3215.</dd>
+        <dt>Print files</dt><dd><a href="https://github.com/apirrone/Open_Duck_Mini/tree/v2/print">print/</a> folder with every STL, and the <a href="https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/print_guide.md">print guide</a>: 36 part types, PLA at 15% infill, <code>foot_bottom_tpu</code> in TPU at 40%. About 500 g of PLA.</dd>
+        <dt>CAD</dt><dd><a href="https://cad.onshape.com/documents/64074dfcfa379b37d8a47762/w/3650ab4221e215a4f65eb7fe/e/0505c262d882183a25049d05">Onshape document</a>, editable, referenced throughout the assembly guide.</dd>
+        <dt>Servo setup</dt><dd><a href="https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/configure_motors.md">configure_motors.md</a>: one servo at a time with <code>configure_motor.py --id N</code> from the runtime repo, horn fitted at zero. IDs 10 to 14 right leg, 20 to 24 left leg, 30 to 33 neck and head.</dd>
+        <dt>Wiring</dt><dd><a href="https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/open_duck_mini_v2_wiring_diagram.png">Wiring diagram</a> and a <a href="https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/wiring.png">second schematic</a>, plus the full Pi Zero header pin map (BNO055 on pins 1, 3, 5, 9; foot switches on GPIO 22 and 27; LEDs, antennas, amplifier) in the assembly guide.</dd>
+        <dt>Assembly</dt><dd><a href="https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/assembly_guide.md">Assembly guide</a>: trunk, feet, shins, thighs, hips, neck, head, IMU, battery pack, body, with a photo per step. The author marks it incomplete: the exact screw count is a TODO, the servo-board mount has no photo, and the expression features (camera, LEDs, speaker) are not yet written up.</dd>
+        <dt>Software</dt><dd><a href="https://github.com/apirrone/Open_Duck_Mini_Runtime/blob/v2/docs/INSTALL.md">Pre-built Pi image</a> (<code>duck.iso</code> for 32 GB cards, user <code>bdxv2</code>, opens its own “Openduck” Wi-Fi if it cannot join yours) and the <a href="https://github.com/apirrone/Open_Duck_Mini_Runtime">runtime</a> with the walking policy <code>BEST_WALK_ONNX_2.onnx</code>. You must still run the motor-offset and IMU calibration scripts and create <code>duck_config.json</code>; the duck will not start without them.</dd>
+        <dt>Training</dt><dd><a href="https://github.com/apirrone/Open_Duck_Playground">Open Duck Playground</a> (MuJoCo Playground) and the <a href="https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/sim2real.md">sim2real notes</a>, which the author labels not finalised.</dd>
+        <dt>Walkthrough</dt><dd><a href="https://tnkr.ai/explore/docs/open-duck-mini/open-duck-mini-v2">Tnkr build guide</a>, the <a href="https://discord.gg/UtJZsgfQGe">Open Duck Discord</a>, and <a href="https://github.com/dev-ansh-r/jero">Jero</a>'s gated build plan from India (parts ordered to walking budgeted at 11 days for a small experienced team).</dd>
+      </dl>
+    </article>
+    <article class="kit-col">
+      <h4>Route B · XL330 replica <span class="chip est">complete for one proven build</span></h4>
+      <dl class="kit-list">
+        <dt>Parts list</dt><dd><a href="https://github.com/AI-FanGe/Microduck-build-tutorial">AI-FanGe README</a> (Chinese and English): Pi Zero 2 W, OpenRB-150, 14× XL330-M288-T, ready-made 6 V pack, BNO08x, microSD, M2/M2.5 screws, POM and steel shims, Dynamixel cables, plus a U2D2 set for configuration (the video uses the OpenRB-150 instead).</dd>
+        <dt>Print files</dt><dd>In the repo under <code>microduck/cad/</code>, revised for printing (the raw simulation meshes were not all printable). PLA recommended. The 3D models carry the original's non-commercial terms.</dd>
+        <dt>Servo setup</dt><dd>Dynamixel Wizard 2.0: Protocol 2.0, 1 Mbps, return delay 0, PWM slope 255; IDs 1 to 5 right leg (ankle up), 6 to 10 left leg, 11 to 14 head and neck, 15 the optional beak. The tutorial also removes the input-voltage shutdown trigger; the OpenELAB write-up argues for fixing the supply instead.</dd>
+        <dt>Wiring</dt><dd>Power and bus diagrams in the README: battery → switch → OpenRB-150 → servo bus, battery → 5 V regulator → Pi, common ground; three daisy chains (5-4-3-2-1, 10-9-8-7-6, 12-11-13-14); BNO08x on I²C pins 1, 3, 5 and ground.</dd>
+        <dt>Assembly</dt><dd>The <a href="https://www.youtube.com/watch?v=Vep8AjoCnEM">build video</a> (feet up, legs, body, neck, head) and the <a href="https://openelab.io/da/blogs/robotics/microduck-build-guide-openelab">OpenELAB write-up</a> of it in English. No written step-by-step with photos exists yet; the <a href="https://ley-wl.github.io/microduck-guide/">community 3D assembly guide</a> covers fifteen modules but is a fitting reference, not verified part by part.</dd>
+        <dt>Software</dt><dd>Flashable <code>microduck.img.xz</code> from the repo's releases (SHA-256 published), with <code>walk.onnx</code>, a headless gamepad service and a Makefile for syncing code. Knee offsets of +45° / −45° are baked for that assembly; verify yours.</dd>
+        <dt>Training</dt><dd><code>mjlab_microduck/</code> in the same repo, derived from the official <a href="https://github.com/pollen-robotics/microduck_rl">microduck_rl</a>. Any mass or IMU-placement difference from the tutorial build means retraining or at least re-checking offsets.</dd>
+        <dt>Known gaps</dt><dd>No official policy is guaranteed to run on a replica; Pollen's ONNX files were trained for Pollen's exact robot. No Indian XL330 stockist. Camera, voice and the NPU features are not part of this build.</dd>
+      </dl>
+    </article>
+  </div>
+
+  <div class="grid grid-3" style="margin-top:2rem">
+    <div class="card">
+      <h3>Tools and consumables</h3>
+      <ul class="small" style="color:var(--ink-2);margin:0">
+        <li>Soldering iron, solder, flux, heat-shrink, hot glue</li>
+        <li>Multimeter (polarity and battery voltage before every first power-on)</li>
+        <li>Crimper plus JST-EH / Dupont terminals; small wire</li>
+        <li>Precision screwdriver set (PH0/PH00, hex 1.5 and 2 mm)</li>
+        <li>Loctite 243 for metal-to-metal screws (never on plastic)</li>
+        <li>Open Duck: soldering iron or heat-set tip for the M3 inserts</li>
+        <li>Lithium: a balance charger or BMS, a fireproof bag, same-voltage cells</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Machines and skills</h3>
+      <ul class="small" style="color:var(--ink-2);margin:0">
+        <li>A 3D printer, or a print service. Open Duck needs TPU for the feet; check the largest trunk and body STLs against your bed before buying a printer</li>
+        <li>A Linux, macOS or WSL machine for the runtime tooling (ssh, rsync, Python); Windows PowerShell is fine for ssh alone</li>
+        <li>A 2.4 GHz Wi-Fi network; the Pi Zero 2 W cannot see 5 GHz</li>
+        <li>A Bluetooth gamepad (Xbox-class) for driving and, on the Open Duck image, for the foot-switch autostart</li>
+        <li>Skills: basic soldering, reading a wiring diagram, flashing an SD card, using a terminal, patience with first prints</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Time, honestly <span class="chip est">estimate</span></h3>
+      <ul class="small" style="color:var(--ink-2);margin:0">
+        <li>Printing: 25 to 40 machine-hours for the Open Duck set; a service takes about a week</li>
+        <li>Servo configuration: an evening for 14 servos</li>
+        <li>Assembly and wiring: two to three sessions</li>
+        <li>Flash, calibrate, first supported stand and walk: one to two sessions, more if a servo ID or the IMU frame is wrong</li>
+        <li>Plan 3 to 6 weekends for a first build. Jero's plan budgeted 11 days from parts ordered to walking, for an experienced team</li>
+      </ul>
+    </div>
+  </div>
+
   <h3 style="margin: 3rem 0 1rem">The build sequence (both DIY routes)</h3>
   <p class="small" style="color:var(--muted);margin-bottom:1rem">Condensed from the Open Duck Mini assembly guide and the OpenELAB / AI-FanGe Microduck replica write-up. Each step is a checkpoint; do not move on until it passes.</p>
   <ol class="steps">
@@ -509,8 +589,8 @@ uv run scripts/infer_policy.py --walking output.onnx</code></pre>
     <li><div><h3>Configure every servo alone</h3><p>One at a time: set a unique ID, 1 Mbps baud, return delay 0, centre the horn, label it. Dynamixel Wizard 2.0 for XL330; the Feetech tool or the Open Duck scripts for STS3215. Fourteen factory-default servos on one bus cannot be told apart later.</p></div></li>
     <li><div><h3>Assemble legs, then body, then head</h3><p>Feet up. Finish both legs before joining them to the body; install the recessed screws before the next servo covers them; keep the head open until the neck servos and (optionally) the beak are secured. Threadlocker on metal-to-metal screws.</p></div></li>
     <li><div><h3>Wire power in two branches</h3><p>Switched battery positive splits to the servo bus directly and to a 5 V buck for the Pi. Three daisy-chains (right leg, left leg, head/neck) joined supply-to-supply, ground-to-ground, data-to-data. IMU on I²C, mounted square to the body frame, orientation matching the config.</p></div></li>
-    <li><div><h3>Flash the image, find it on Wi-Fi</h3><p>Both projects publish a ready Pi image. 2.4 GHz Wi-Fi only on the Pi Zero 2 W. SSH in, change the default password, read servo voltages and IMU before anything moves.</p></div></li>
-    <li><div><h3>Calibrate, then a supported first stand</h3><p>Zero-pose and knee offsets must match your assembly, not the tutorial's. Hold the robot, enable torque, check the neutral pose, then stand it on a clear floor with a hand ready. Walking comes last and starts at zero velocity.</p></div></li>
+    <li><div><h3>Flash the image, find it on Wi-Fi</h3><p>Both projects publish a ready Pi image. Open Duck: <code>duck.iso</code> on a 32 GB card, user <code>bdxv2</code>, and if it cannot join your Wi-Fi it opens its own “Openduck” network. Replica: <code>microduck.img.xz</code>, host <code>microduck.local</code>, user <code>user</code>. 2.4 GHz only on the Pi Zero 2 W. SSH in, change the default password and the hotspot password, read servo voltages and the IMU before anything moves.</p></div></li>
+    <li><div><h3>Calibrate, then a supported first stand</h3><p>Open Duck will not start until you run the motor-offset and IMU calibration scripts and write <code>duck_config.json</code>; the replica bakes +45° / −45° knee offsets for its reference assembly. Either way, offsets must match your robot, not the tutorial's. Hold the robot, enable torque, check the neutral pose, then stand it on a clear floor with a hand ready. Walking comes last and starts at zero velocity.</p></div></li>
     <li><div><h3>Keep a vet book</h3><p>Log hours, falls and every servo swap, the way the real robot's <code>robotctl vetbook</code> does. The data tells you when a servo is dying before it strips a gear mid-walk.</p></div></li>
   </ol>
 </section>
